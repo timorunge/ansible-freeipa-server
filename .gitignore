@@ -1,0 +1,4 @@
+.vagrant
+*.log
+tests/ansible.cfg
+tests/test.retry

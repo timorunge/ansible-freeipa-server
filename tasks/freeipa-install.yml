@@ -1,0 +1,7 @@
+---
+
+- name: Run the FreeIPA installer
+  args:
+    creates: /etc/ipa/default.conf
+  command: "{{ freeipa_server_install_base_command }} {{ freeipa_server_install_options | join(' ') }}"
+  notify: restart ipa services

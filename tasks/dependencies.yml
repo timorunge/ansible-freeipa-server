@@ -1,0 +1,15 @@
+---
+
+- name: Set hostname
+  hostname:
+    name: "{{ freeipa_server_fqdn | default(ansible_fqdn) }}"
+  when: freeipa_server_manage_host
+
+- name: Add FreeIPA host entry
+  lineinfile:
+    dest: /etc/hosts
+    group: root
+    line: "{{ freeipa_server_ip }} {{ freeipa_server_fqdn | default(ansible_fqdn) }}"
+    mode: 0644
+    owner: root
+  when: freeipa_server_manage_host

@@ -1,0 +1,23 @@
+---
+
+# Automatically setting an entry in /etc/hosts
+freeipa_server_manage_host: true
+
+# The base command for the FreeIPA installation
+freeipa_server_install_base_command: ipa-server-install --unattended
+
+# The default FreeIPA installation options
+freeipa_server_install_options:
+  - "--realm={{ freeipa_server_realm }}"
+  - "--domain={{ freeipa_server_domain }}"
+  - '--setup-dns'
+  - "--ds-password {{ freeipa_server_ds_password }}"
+  - "--admin-password {{ freeipa_server_admin_password }}"
+  - '--mkhomedir'
+  - "--hostname={{ freeipa_server_fqdn | default(ansible_fqdn) }}"
+  - "--ip-address={{ freeipa_server_ip }}"
+  - '--no-host-dns'
+  - '--idstart=5000'
+  - '--ssh-trust-dns'
+  - '--forwarder=8.8.8.8'
+  - '--auto-forwarders'
