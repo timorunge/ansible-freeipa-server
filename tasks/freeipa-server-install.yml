@@ -1,6 +1,6 @@
 ---
 
-- name: Run the FreeIPA installer
+- name: Run the FreeIPA server installer
   args:
     creates: /etc/ipa/default.conf
   command: "{{ freeipa_server_install_base_command }} {{ freeipa_server_install_options | join(' ') }}"

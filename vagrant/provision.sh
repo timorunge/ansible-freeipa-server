@@ -11,12 +11,14 @@ if [ -f /etc/debian_version ]; then
     systemd
   apt-get clean
 elif [ -f /etc/redhat-release ]; then
-  yum install -y epel-release
-  yum update -y
+  if [ -f /etc/centos-release ]; then
+    yum install -y epel-release
+  fi
+  yum update -y --exclude=kernel*
   yum install -y \
     curl \
-    pip \
     python \
+    python2-dnf \
     systemd
   yum clean all
 else
@@ -26,6 +28,11 @@ fi
 
 curl -s https://bootstrap.pypa.io/get-pip.py | python
 
-pip install pyopenssl
-pip install ansible
-pip install ansible-lint coverage junit-xml splitter
+pip install --upgrade \
+  ansible \
+  ansible-lint \
+  coverage \
+  cryptography \
+  junit-xml \
+  pyopenssl \
+  splitter \

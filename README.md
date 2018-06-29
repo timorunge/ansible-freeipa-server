@@ -3,14 +3,7 @@ freeipa-server
 
 This role is building and installing an FreeIPA Server according to your needs.
 
-Tested platforms are:
-
-* Ubuntu
-  * 16.04
-  * 17.10
-  * 18.04
-
-Never the less this playbook should work fine on RedHat based distributions.
+You can find a list of all tested platforms in the [testing section](#testing).
 
 This playbook is not taking care of the initialisation of the Kerberos admin
 user. You can find some examples in the
@@ -53,11 +46,17 @@ It is required to set the following variables in order to get this role up and
 running (without customisation). Those variables don't have any default values:
 
 ```yaml
+# Admin user kerberos password
 freeipa_server_admin_password: Passw0rd
+# Primary DNS domain of the IPA deployment
 freeipa_server_domain: example.com
+# Directory Manager password
 freeipa_server_ds_password: Passw0rd
+# The hostname of this machine (FQDN)
 freeipa_server_fqdn: ipa.example.com
+# Master Server IP Address
 freeipa_server_ip: 172.20.0.2
+# Kerberos realm name of the IPA deployment
 freeipa_server_realm: EXAMPLE.COM
 ```
 
@@ -94,7 +93,7 @@ Examples
 
 To keep the document lean the install options are stripped.
 You can find the install options either in [this
-document](#freeipa-install-options) or in the online
+document](#freeipa-server-install-options) or in the online
 [man page for ipa-server-install](https://linux.die.net/man/1/ipa-server-install).
 
 ## 1) Install the FreeIPA server with default settings
@@ -112,7 +111,26 @@ document](#freeipa-install-options) or in the online
     - timorunge.freeipa-server
 ```
 
-## 2) Install the FreeIPA server with custom install options:
+## 2) Install the FreeIPA server and enable it automatically on all (IPv4) network interfaces
+
+You should still set `freeipa_server_ip` if you want to use `freeipa_server_manage_host`.
+
+```yaml
+- hosts: freeipa-server
+  vars:
+    freeipa_server_admin_password: Passw0rd
+    freeipa_server_domain: example.com
+    freeipa_server_ds_password: Passw0rd
+    freeipa_server_fqdn: ipa.example.com
+    freeipa_server_ip: 172.20.0.2
+    freeipa_server_realm: EXAMPLE.COM
+    freeipa_server_install_options:
+      - "--ip-address={{ ansible_all_ipv4_addresses | join(' --ip-address=') }}"
+  roles:
+    - timorunge.freeipa-server
+```
+
+## 3) Install the FreeIPA server with custom install options
 
 ```yaml
 - hosts: freeipa-server
@@ -147,8 +165,8 @@ document](#freeipa-install-options) or in the online
     - timorunge.freeipa-server
 ```
 
-FreeIPA install options
------------------------
+FreeIPA server install options
+------------------------------
 
 An overview of the install options for ipa-server-install (4.3.1).
 
@@ -267,11 +285,17 @@ Testing
 
 Testing is done with [Vagrant](https://www.vagrantup.com/)
 ([Installing Vagrant](https://www.vagrantup.com/docs/installation/))
-which is bringing up the following virtual machines:
+which brings up the following virtual machines:
 
-* Ubuntu 16.04
-* Ubuntu 17.10
-* Ubuntu 18.04
+* EL
+  * 7
+* Fedora
+  * 26
+  * 27
+* Ubuntu
+  * 16.04 LTS (Xenial Xerus)
+  * 17.10 (Artful Aardvark)
+  * 18.04 LTS (Bionic Beaver)
 
 The latest stable release of Ansible is installed on all virtual machines and is
 applying a [test playbook](tests/test.yml) locally.
@@ -280,12 +304,15 @@ For further details and additional checks take a look at the
 [Vagrant entrypoint](vagrant/vagrant-entrypoint.sh).
 
 ```sh
-# Testing locally in a vagrant virtual machine
-vagrant up
-vagrant provision
-vagrant ssh ubuntu_18_04
-sudo /vagrant/vagrant-entrypoint.sh
+# Testing in all available vagrant machines:
+# This will take some time. Grab a coffee. Or two. Or forty two.
+vagrant up --parallel && vagrant halt
+for h in $(vagrant global-status --prune | grep freeipa_server | awk '{print $2}') ; do echo ${h} ; vagrant up --provision ${h} ; vagrant ssh ${h} -c "sudo /vagrant/vagrant-entrypoint.sh" && (echo "$(date): ${h}: pass" >> tests/results.log) || (echo "$(date): ${h}: fail" >> tests/results.log) ; vagrant halt ${h} ; done
+vagrant destroy -f
 ```
+
+If Vagrant is failing to mount the directories you should ensure that you've
+installed the [VirtualBox Guest Additions](https://www.virtualbox.org/manual/ch04.html#idm2099).
 
 Security
 --------

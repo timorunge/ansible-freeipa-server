@@ -11,14 +11,16 @@ galaxy_info:
       - 7
   - name: Fedora
     versions:
-      - all
+      - 26
+      - 27
   - name: Ubuntu
     versions:
-      - all
+      - Xenial
+      - Artful
+      - Bionic
   galaxy_tags:
     - DNS
     - FreeIPA
-    - FreeIPA-Server
     - Identity
     - IdM
     - Kerberos

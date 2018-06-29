@@ -1,0 +1,9 @@
+---
+
+freeipa_server_pip_pkgs:
+  - custodia
+  - ipapython
+  - jwcrypto
+  - pyasn1-modules
+  - pyopenssl
+  - python-ldap
