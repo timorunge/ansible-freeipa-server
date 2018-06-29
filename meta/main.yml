@@ -15,9 +15,9 @@ galaxy_info:
       - 27
   - name: Ubuntu
     versions:
-      - Xenial
-      - Artful
-      - Bionic
+      - xenial
+      - artful
+      - bionic
   galaxy_tags:
     - DNS
     - FreeIPA

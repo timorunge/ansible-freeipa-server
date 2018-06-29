@@ -3,10 +3,10 @@
 # Automatically setting an entry in /etc/hosts
 freeipa_server_manage_host: true
 
-# The base command for the FreeIPA installation
+# The base command for the FreeIPA server installation
 freeipa_server_install_base_command: ipa-server-install --unattended
 
-# The default FreeIPA installation options
+# The default FreeIPA server installation options
 freeipa_server_install_options:
   - "--realm={{ freeipa_server_realm }}"
   - "--domain={{ freeipa_server_domain }}"
