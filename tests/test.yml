@@ -30,4 +30,4 @@
       - '--allow-zone-overlap'
 
   roles:
-    - timorunge.freeipa-server
+    - timorunge.freeipa_server

@@ -1,4 +1,4 @@
-freeipa-server
+freeipa_server
 ==============
 
 This role is building and installing an FreeIPA Server according to your needs.
@@ -36,7 +36,7 @@ Install
 -------
 
 ```sh
-ansible-galaxy install timorunge.freeipa-server
+ansible-galaxy install timorunge.freeipa_server
 ```
 
 Role Variables
@@ -108,7 +108,7 @@ document](#freeipa-server-install-options) or in the online
     freeipa_server_ip: 172.20.0.2
     freeipa_server_realm: EXAMPLE.COM
   roles:
-    - timorunge.freeipa-server
+    - timorunge.freeipa_server
 ```
 
 ## 2) Install the FreeIPA server and enable it automatically on all (IPv4) network interfaces
@@ -127,7 +127,7 @@ You should still set `freeipa_server_ip` if you want to use `freeipa_server_mana
     freeipa_server_install_options:
       - "--ip-address={{ ansible_all_ipv4_addresses | join(' --ip-address=') }}"
   roles:
-    - timorunge.freeipa-server
+    - timorunge.freeipa_server
 ```
 
 ## 3) Install the FreeIPA server with custom install options
@@ -162,7 +162,7 @@ You should still set `freeipa_server_ip` if you want to use `freeipa_server_mana
       - '--no-ssh'
       - '--no-sshd'
   roles:
-    - timorunge.freeipa-server
+    - timorunge.freeipa_server
 ```
 
 FreeIPA server install options

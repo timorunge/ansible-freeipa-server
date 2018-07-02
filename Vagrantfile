@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
     freeipa_server_ubuntu_18_04.vm.network :private_network, ip: "172.20.18.4"
   end
   config.vm.box_check_update = true
-  config.vm.synced_folder ".", "/etc/ansible/roles/timorunge.freeipa-server"
+  config.vm.synced_folder ".", "/etc/ansible/roles/timorunge.freeipa_server"
   config.vm.synced_folder "./tests", "/ansible"
   config.vm.synced_folder "./vagrant", "/vagrant"
   config.vm.provider "virtualbox" do |v|

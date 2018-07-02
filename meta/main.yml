@@ -3,6 +3,7 @@
 galaxy_info:
   author: Timo Runge
   description: FreeIPA Identity Management Server provisioning.
+  role_name: freeipa_server
   license: BSD
   min_ansible_version: 2.4
   platforms:
@@ -19,14 +20,14 @@ galaxy_info:
       - artful
       - bionic
   galaxy_tags:
-    - DNS
-    - FreeIPA
-    - Identity
-    - IdM
-    - Kerberos
-    - LDAP
-    - NTP
-    - SSO
-    - SSSD
+    - dns
+    - freeipa
+    - identity
+    - idm
+    - kerberos
+    - ldap
+    - ntp
+    - sso
+    - sssd
 
 dependencies: []

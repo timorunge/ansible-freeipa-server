@@ -16,7 +16,7 @@ install:
   - pip install ansible==2.5.5
   - pip install ansible-lint coverage junit-xml splitter
   - ansible --version
-  - ansible-galaxy install timorunge.freeipa-server --roles-path=./
+  - ansible-galaxy install timorunge.freeipa_server --roles-path=./
   - echo $'[defaults]\nroles_path=./' > ansible.cfg
 
 script:
