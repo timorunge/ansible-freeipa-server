@@ -29,10 +29,10 @@ fi
 curl -s https://bootstrap.pypa.io/get-pip.py | python
 
 pip install --upgrade \
-  ansible \
+  ansible==2.6.0 \
   ansible-lint \
   coverage \
   cryptography \
   junit-xml \
   pyopenssl \
-  splitter \
+  splitter
