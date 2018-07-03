@@ -28,5 +28,6 @@ galaxy_info:
     - ntp
     - sso
     - sssd
+    - system
 
 dependencies: []

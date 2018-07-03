@@ -344,6 +344,10 @@ On FreeIPA you can also find a general
 [Backup and Restore](https://www.freeipa.org/page/Backup_and_Restore) page which
 is covering the most important topics.
 
+There is an Ansible role out there which is doing some basic backups:
+[FreeIPA Server Backup](https://galaxy.ansible.com/timorunge/freeipa_server_backup/)
+([Github Repo](https://github.com/timorunge/ansible-freeipa-server-backup)).
+
 Dependencies
 ------------
 
