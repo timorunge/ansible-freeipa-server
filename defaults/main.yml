@@ -1,5 +1,8 @@
 ---
 
+# Install FreeIPA packages (set to false if you're using timorunge.freeipa)
+freeipa_server_install_pkgs: true
+
 # Automatically setting an entry in /etc/hosts
 freeipa_server_manage_host: true
 
