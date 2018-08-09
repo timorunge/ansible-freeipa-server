@@ -9,7 +9,7 @@
   lineinfile:
     dest: /etc/hosts
     group: root
-    line: "{{ freeipa_server_ip | default(127.0.0.1) }} {{ freeipa_server_fqdn | default(ansible_fqdn) }}"
+    line: "{{ freeipa_server_ip | default('127.0.0.1') }} {{ freeipa_server_fqdn | default(ansible_fqdn) }}"
     mode: 0644
     owner: root
   when: freeipa_server_manage_host
