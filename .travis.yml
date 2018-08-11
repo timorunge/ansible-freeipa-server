@@ -17,7 +17,7 @@ install:
     setuptools
   - pip install --upgrade \
     ansible-lint \
-    ansible==2.6.0 \
+    ansible==2.6.2 \
     coverage \
     junit-xml \
     splitter

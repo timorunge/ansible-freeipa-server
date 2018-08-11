@@ -20,6 +20,9 @@ elif [ -f /etc/redhat-release ]; then
     python \
     python2-dnf \
     systemd
+  if [ -f /etc/centos-release ]; then
+    yum install -y systemd-resolved
+  fi
   yum clean all
 else
   echo "Operating system is not supportet."
@@ -29,7 +32,7 @@ fi
 curl -s https://bootstrap.pypa.io/get-pip.py | python
 
 pip install --upgrade \
-  ansible==2.6.0 \
+  ansible==2.6.2 \
   ansible-lint \
   coverage \
   cryptography \

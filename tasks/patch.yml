@@ -1,0 +1,12 @@
+---
+
+- name: Fixing permissions on /var/lib/krb5kdc
+  file:
+    group: ipaapi
+    mode: 0750
+    owner: root
+    path: /var/lib/krb5kdc
+    state: directory
+  when: (ansible_os_family == "Debian") and
+        (ansible_distribution == "Ubuntu" ) and
+        (ansible_distribution_version == "18.04")

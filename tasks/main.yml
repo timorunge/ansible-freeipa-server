@@ -12,4 +12,6 @@
 - include_tasks: install-pkgs.yml
   when: freeipa_server_install_pkgs
 
+- include_tasks: patch.yml
+
 - include_tasks: freeipa-server-install.yml

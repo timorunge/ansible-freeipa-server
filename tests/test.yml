@@ -16,11 +16,11 @@
       - "--realm={{ freeipa_server_realm }}"
       - "--domain={{ freeipa_server_domain }}"
       - '--setup-dns'
-      - "--ds-password {{ freeipa_server_ds_password }}"
-      - "--admin-password {{ freeipa_server_admin_password }}"
+      - "--ds-password={{ freeipa_server_ds_password }}"
+      - "--admin-password={{ freeipa_server_admin_password }}"
       - '--mkhomedir'
       - "--hostname={{ freeipa_server_fqdn | default(ansible_fqdn) }}"
-      - "--ip-address={{ freeipa_server_ip }}"
+      - "--ip-address={{ ansible_all_ipv4_addresses | join(' --ip-address=') }}"
       - '--no-host-dns'
       - '--no-ntp'
       - '--idstart=5000'

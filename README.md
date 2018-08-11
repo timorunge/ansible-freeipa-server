@@ -5,29 +5,20 @@ This role is building and installing an FreeIPA Server according to your needs.
 
 You can find a list of all tested platforms in the [testing section](#testing).
 
-This playbook is not taking care of the initialisation of the Kerberos admin
-user. You can find some examples in the
-[FreeIPA Quick Start Guide](https://www.freeipa.org/page/Quick_Start_Guide#Administrative_users_in_FreeIPA)
-and the [RHEL Documentation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/5/html/configuring_identity_management/logging-in#logging-in-kinit).
-
-But basically you just have to run
-
-```sh
-kinit admin
-```
-
-once the Playbook is finished.
+This playbook is taking care of the initialisation of the Kerberos admin user.
+The passeword is the one which you've set for `freeipa_server_admin_password`.
 
 Requirements
 ------------
 
-This role requires Ansible 2.4.0 or higher. It's fully tested with the latest
-stable release (2.6.0).
+This role requires
+[Ansible 2.6.0](https://docs.ansible.com/ansible/devel/roadmap/ROADMAP_2_6.html)
+or higher.
 
-You can simply use pip to install (and define) the latest stable version:
+You can simply use pip to install (and define) a stable version:
 
 ```sh
-pip install ansible==2.6.0
+pip install ansible==2.6.2
 ```
 
 All platform requirements are listed in the metadata file.
@@ -75,8 +66,8 @@ freeipa_server_install_options:
   - "--realm={{ freeipa_server_realm }}"
   - "--domain={{ freeipa_server_domain }}"
   - '--setup-dns'
-  - "--ds-password {{ freeipa_server_ds_password }}"
-  - "--admin-password {{ freeipa_server_admin_password }}"
+  - "--ds-password={{ freeipa_server_ds_password }}"
+  - "--admin-password={{ freeipa_server_admin_password }}"
   - '--mkhomedir'
   - "--hostname={{ freeipa_server_fqdn | default(ansible_fqdn) }}"
   - "--ip-address={{ freeipa_server_ip }}"
