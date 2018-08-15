@@ -1,6 +1,6 @@
 ---
 
-- name: Fixing permissions on /var/lib/krb5kdc
+- name: Set permissions on /var/lib/krb5kdc
   file:
     group: ipaapi
     mode: 0750
