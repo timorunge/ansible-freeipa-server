@@ -6,7 +6,7 @@
     state: present
     update_cache: "{{ omit if ansible_pkg_mgr == 'dnf' else 'yes' }}"
 
-- name: Install FreeIPA client pip dependencies
+- name: Install FreeIPA server pip dependencies
   pip:
     name: "{{ freeipa_server_pip_pkgs }}"
     state: present
