@@ -32,7 +32,7 @@ fi
 curl -s https://bootstrap.pypa.io/get-pip.py | python
 
 pip install --upgrade \
-  ansible==2.6.2 \
+  ansible==2.6.3 \
   ansible-lint \
   coverage \
   cryptography \

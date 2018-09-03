@@ -1,5 +1,12 @@
 ---
 
+- name: Add EPEL repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+  when: ansible_os_family == "RedHat"
+
 - name: Install FreeIPA server packages
   package:
     name: "{{ freeipa_server_pkgs }}"

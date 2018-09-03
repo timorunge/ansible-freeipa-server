@@ -37,11 +37,11 @@ It is required to set the following variables in order to get this role up and
 running (without customisation). Those variables don't have any default values:
 
 ```yaml
-# Admin user kerberos password
+# Admin user kerberos password - at least 8 characters
 freeipa_server_admin_password: Passw0rd
 # Primary DNS domain of the IPA deployment
 freeipa_server_domain: example.com
-# Directory Manager password
+# Directory Manager password - at least 8 characters
 freeipa_server_ds_password: Passw0rd
 # The hostname of this machine (FQDN)
 freeipa_server_fqdn: ipa.example.com
@@ -292,18 +292,24 @@ The latest stable release of Ansible is installed on all virtual machines and is
 applying a [test playbook](tests/test.yml) locally.
 
 For further details and additional checks take a look at the
-[Vagrant entrypoint](vagrant/vagrant-entrypoint.sh).
+[Vagrant entrypoint](tests/vagrant/vagrant-entrypoint.sh).
 
 ```sh
 # Testing in all available vagrant machines:
 # This will take some time. Grab a coffee. Or two. Or forty two.
+cd tests
 vagrant up --parallel && vagrant halt
 for h in $(vagrant global-status --prune | grep freeipa_server | awk '{print $2}') ; do echo ${h} ; vagrant up --provision ${h} ; vagrant ssh ${h} -c "sudo /vagrant/vagrant-entrypoint.sh" && (echo "$(date): ${h}: pass" >> tests/results.log) || (echo "$(date): ${h}: fail" >> tests/results.log) ; vagrant halt ${h} ; done
 vagrant destroy -f
 ```
 
 If Vagrant is failing to mount the directories you should ensure that you've
-installed the [VirtualBox Guest Additions](https://www.virtualbox.org/manual/ch04.html#idm2099).
+installed the
+[VirtualBox Guest Additions](https://www.virtualbox.org/manual/ch04.html#idm2099).
+
+Travis tests are done with [Docker](https://www.docker.com) and
+[docker_test_runner](https://github.com/timorunge/docker-test-runner). Tests
+on Travis are performing linting and syntax checks.
 
 Security
 --------
