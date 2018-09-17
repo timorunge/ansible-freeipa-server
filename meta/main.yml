@@ -5,7 +5,7 @@ galaxy_info:
   description: FreeIPA Identity Management Server provisioning.
   role_name: freeipa_server
   license: BSD
-  min_ansible_version: 2.4
+  min_ansible_version: 2.4.0
   platforms:
   - name: EL
     versions:
