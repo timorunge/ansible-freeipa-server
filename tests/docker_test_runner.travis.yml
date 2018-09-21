@@ -10,7 +10,7 @@ disable_logging: False
 
 docker_image_build_args:
   ansible_role: timorunge.freeipa_server
-  ansible_version: "2.6.4"
+  ansible_version: 2.6.4
 
 docker_image_path: "__PATH__/tests/docker"
 

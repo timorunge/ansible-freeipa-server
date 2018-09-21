@@ -1,11 +1,9 @@
 ---
 
 - hosts: localhost
-  remote_user: root
-  gather_facts: true
-
+  gather_facts: True
   vars:
-    freeipa_server_manage_host: true
+    freeipa_server_manage_host: True
     freeipa_server_admin_password: Passw0rd
     freeipa_server_domain: example.com
     freeipa_server_ds_password: Passw0rd
@@ -15,19 +13,18 @@
     freeipa_server_install_options:
       - "--realm={{ freeipa_server_realm }}"
       - "--domain={{ freeipa_server_domain }}"
-      - '--setup-dns'
+      - "--setup-dns"
       - "--ds-password={{ freeipa_server_ds_password }}"
       - "--admin-password={{ freeipa_server_admin_password }}"
-      - '--mkhomedir'
+      - "--mkhomedir"
       - "--hostname={{ freeipa_server_fqdn | default(ansible_fqdn) }}"
       - "--ip-address={{ ansible_all_ipv4_addresses | join(' --ip-address=') }}"
-      - '--no-host-dns'
-      - '--no-ntp'
-      - '--idstart=5000'
-      - '--ssh-trust-dns'
-      - '--forwarder=8.8.8.8'
-      - '--auto-forwarders'
-      - '--allow-zone-overlap'
-
+      - "--no-host-dns"
+      - "--no-ntp"
+      - "--idstart=5000"
+      - "--ssh-trust-dns"
+      - "--forwarder=8.8.8.8"
+      - "--auto-forwarders"
+      - "--allow-zone-overlap"
   roles:
     - timorunge.freeipa_server

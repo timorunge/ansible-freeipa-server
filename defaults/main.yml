@@ -1,26 +1,30 @@
 ---
 
-# Install FreeIPA packages (set to false if you're using timorunge.freeipa)
-freeipa_server_install_pkgs: true
+# Install FreeIPA packages (set to False if you're using `timorunge.freeipa`)
+# Type: Bool
+freeipa_server_install_pkgs: True
 
 # Automatically setting an entry in /etc/hosts
-freeipa_server_manage_host: true
+# Type: Bool
+freeipa_server_manage_host: True
 
 # The base command for the FreeIPA server installation
+# Type: Str
 freeipa_server_install_base_command: ipa-server-install --unattended
 
 # The default FreeIPA server installation options
+# Type: List
 freeipa_server_install_options:
   - "--realm={{ freeipa_server_realm }}"
   - "--domain={{ freeipa_server_domain }}"
-  - '--setup-dns'
+  - "--setup-dns"
   - "--ds-password {{ freeipa_server_ds_password }}"
   - "--admin-password {{ freeipa_server_admin_password }}"
-  - '--mkhomedir'
+  - "--mkhomedir"
   - "--hostname={{ freeipa_server_fqdn | default(ansible_fqdn) }}"
   - "--ip-address={{ freeipa_server_ip }}"
-  - '--no-host-dns'
-  - '--idstart=5000'
-  - '--ssh-trust-dns'
-  - '--forwarder=8.8.8.8'
-  - '--auto-forwarders'
+  - "--no-host-dns"
+  - "--idstart=5000"
+  - "--ssh-trust-dns"
+  - "--forwarder=8.8.8.8"
+  - "--auto-forwarders"

@@ -8,7 +8,9 @@ if [ -f /etc/debian_version ]; then
     curl \
     python \
     python-apt \
-    systemd
+    systemd \
+    unzip \
+    wget
   apt-get clean
 elif [ -f /etc/redhat-release ]; then
   if [ -f /etc/centos-release ]; then
@@ -19,7 +21,9 @@ elif [ -f /etc/redhat-release ]; then
     curl \
     python \
     python2-dnf \
-    systemd
+    systemd \
+    unzip \
+    wget
   if [ -f /etc/centos-release ]; then
     yum install -y systemd-resolved
   fi

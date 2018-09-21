@@ -38,16 +38,22 @@ running (without customisation). Those variables don't have any default values:
 
 ```yaml
 # Admin user kerberos password - at least 8 characters
+# Type: Str
 freeipa_server_admin_password: Passw0rd
 # Primary DNS domain of the IPA deployment
+# Type: Str
 freeipa_server_domain: example.com
 # Directory Manager password - at least 8 characters
+# Type: Str
 freeipa_server_ds_password: Passw0rd
 # The hostname of this machine (FQDN)
+# Type: Str
 freeipa_server_fqdn: ipa.example.com
 # Master Server IP Address
+# Type: Str
 freeipa_server_ip: 172.20.0.2
 # Kerberos realm name of the IPA deployment
+# Type: Str
 freeipa_server_realm: EXAMPLE.COM
 ```
 
@@ -56,36 +62,39 @@ them are as follows. (For all variables, take a look at [defaults/main.yml](defa
 
 ```yaml
 # Automatically setting an entry in /etc/hosts
-freeipa_server_manage_host: true
+# Type: Bool
+freeipa_server_manage_host: True
 
 # The base command for the FreeIPA installation
+# Type: Str
 freeipa_server_install_base_command: ipa-server-install --unattended
 
 # The default FreeIPA installation options
+# Type: List
 freeipa_server_install_options:
   - "--realm={{ freeipa_server_realm }}"
   - "--domain={{ freeipa_server_domain }}"
-  - '--setup-dns'
+  - "--setup-dns"
   - "--ds-password={{ freeipa_server_ds_password }}"
   - "--admin-password={{ freeipa_server_admin_password }}"
-  - '--mkhomedir'
+  - "--mkhomedir"
   - "--hostname={{ freeipa_server_fqdn | default(ansible_fqdn) }}"
   - "--ip-address={{ freeipa_server_ip }}"
-  - '--no-host-dns'
-  - '--no-ntp'
-  - '--idstart=5000'
-  - '--ssh-trust-dns'
-  - '--forwarder=8.8.8.8'
-  - '--auto-forwarders'
+  - "--no-host-dns"
+  - "--no-ntp"
+  - "--idstart=5000"
+  - "--ssh-trust-dns"
+  - "--forwarder=8.8.8.8"
+  - "--auto-forwarders"
 ```
 
 Examples
 --------
 
-To keep the document lean the install options are stripped.
-You can find the install options either in [this
-document](#freeipa-server-install-options) or in the online
-[man page for ipa-server-install](https://linux.die.net/man/1/ipa-server-install).
+To keep the document lean the install options are stripped. You can
+find the install options either in
+[this document](#freeipa-server-install-options) or in the
+[online man pages for ipa-server-install](https://linux.die.net/man/1/ipa-server-install).
 
 ## 1) Install the FreeIPA server with default settings
 
@@ -135,23 +144,23 @@ You should still set `freeipa_server_ip` if you want to use `freeipa_server_mana
     freeipa_server_install_options:
       - "--realm={{ freeipa_server_realm }}"
       - "--domain={{ freeipa_server_domain }}"
-      - '--setup-dns'
+      - "--setup-dns"
       - "--ds-password {{ freeipa_server_ds_password }}"
       - "--admin-password {{ freeipa_server_admin_password }}"
-      - '--mkhomedir'
+      - "--mkhomedir"
       - "--hostname={{ freeipa_server_fqdn | default(ansible_fqdn) }}"
       - "--ip-address={{ freeipa_server_ip }}"
-      - '--ip-address=10.0.0.2'
-      - '--ip-address=192.168.20.2'
-      - '--no-host-dns'
-      - '--no-ntp'
-      - '--idstart=5000'
-      - '--ssh-trust-dns'
-      - '--forwarder=8.8.8.8'
-      - '--auto-forwarders'
-      - '--no-ui-redirect'
-      - '--no-ssh'
-      - '--no-sshd'
+      - "--ip-address=10.0.0.2"
+      - "--ip-address=192.168.20.2"
+      - "--no-host-dns"
+      - "--no-ntp"
+      - "--idstart=5000"
+      - "--ssh-trust-dns"
+      - "--forwarder=8.8.8.8"
+      - "--auto-forwarders"
+      - "--no-ui-redirect"
+      - "--no-ssh"
+      - "--no-sshd"
   roles:
     - timorunge.freeipa_server
 ```

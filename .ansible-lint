@@ -1,8 +1,8 @@
 ---
 
-parseable: true
-quiet: true
+parseable: True
+quiet: True
 skip_list:
   - formatting
-use_default_rules: true
+use_default_rules: True
 verbosity: 1

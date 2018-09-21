@@ -11,8 +11,18 @@ done
 
 printf "[defaults]\nroles_path=/etc/ansible/roles\n" > /ansible/ansible.cfg
 
-ansible-lint /ansible/test.yml
-ansible-lint /etc/ansible/roles/timorunge.freeipa_server/tasks/main.yml
+if [ ! -f /etc/ansible/lint.zip ]; then
+  wget https://github.com/ansible/galaxy-lint-rules/archive/master.zip -O \
+  /etc/ansible/lint.zip
+  unzip /etc/ansible/lint.zip -d /etc/ansible/lint
+fi
+
+ansible-lint -c /etc/ansible/roles/timorunge.freeipa_server/.ansible-lint -r \
+  /etc/ansible/lint/galaxy-lint-rules-master/rules \
+  /etc/ansible/roles/timorunge.freeipa_server
+ansible-lint -c /etc/ansible/roles/timorunge.freeipa_server/.ansible-lint -r \
+  /etc/ansible/lint/galaxy-lint-rules-master/rules \
+  /ansible/test.yml
 
 ansible-playbook /ansible/test.yml \
   -i /ansible/inventory \

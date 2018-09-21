@@ -1,5 +1,7 @@
 ---
 
+# List of the required pip packages
+# Type: List
 freeipa_server_pip_pkgs:
   - custodia
   - ipapython

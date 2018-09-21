@@ -1,5 +1,7 @@
 ---
 
+# List of required packages
+# Type: List
 freeipa_server_pkgs:
   - bind
   - bind-dyndb-ldap
