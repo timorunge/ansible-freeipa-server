@@ -1,18 +1,25 @@
 freeipa_server
 ==============
 
-This role is building and installing an FreeIPA Server according to your needs.
+This role is installing and configuring the FreeIPA Server according to
+your needs.
 
-You can find a list of all tested platforms in the [testing section](#testing).
+This playbook is taking care of the initialisation of the Kerberos admin
+user (username: `admin`, passeword is the one which you're setting in
+`freeipa_server_admin_password`).
 
-This playbook is taking care of the initialisation of the Kerberos admin user.
-The passeword is the one which you've set for `freeipa_server_admin_password`.
+In combination with
+[`freeipa`](https://galaxy.ansible.com/timorunge/freeipa)
+([Github](https://github.com/timorunge/ansible-freeipa)) it's
+possible (and tested) to use `freeipa_server` with the latest version of
+FreeIPA itself on Ubuntu >= 18.04 (take a look at the
+[example section](https://github.com/timorunge/ansible-freeipa#6-install-freeipa-with-timorungesssd-and-timorungefreeipa_server)).
 
 Requirements
 ------------
 
 This role requires
-[Ansible 2.6.0](https://docs.ansible.com/ansible/devel/roadmap/ROADMAP_2_6.html)
+[Ansible 2.5.0](https://docs.ansible.com/ansible/devel/roadmap/ROADMAP_2_5.html)
 or higher.
 
 You can simply use pip to install (and define) a stable version:
@@ -168,114 +175,149 @@ You should still set `freeipa_server_ip` if you want to use `freeipa_server_mana
 FreeIPA server install options
 ------------------------------
 
-An overview of the install options for ipa-server-install (4.3.1).
+An overview of the install options for ipa-server-install (4.6.4).
 
 ```sh
---version             show program's version number and exit
--h, --help            show this help message and exit
--U, --unattended      unattended (un)installation never prompts the user
+Usage: ipa-server-install [options]
 
-basic options:
-  -r REALM_NAME, --realm=REALM_NAME
-                      realm name
-  -n DOMAIN_NAME, --domain=DOMAIN_NAME
-                      domain name
-  --setup-dns         configure bind with our zone
-  -p DM_PASSWORD, --ds-password=DM_PASSWORD
-                      Directory Manager password
-  -a ADMIN_PASSWORD, --admin-password=ADMIN_PASSWORD
-                      admin user kerberos password
-  --mkhomedir         create home directories for users on their first login
-  --hostname=HOST_NAME
-                      fully qualified name of this host
-  --domain-level=DOMAINLEVEL
-                      IPA domain level
-  --ip-address=IP_ADDRESS
-                      Master Server IP Address. This option can be used
-                      multiple times
-  --no-host-dns       Do not use DNS for hostname lookup during installation
-  -N, --no-ntp        do not configure ntp
-  --idstart=IDSTART   The starting value for the IDs range (default random)
-  --idmax=IDMAX       The max value for the IDs range (default:
-                      idstart+199999)
-  --no_hbac_allow     Don't install allow_all HBAC rule
-  --ignore-topology-disconnect
-                      do not check whether server uninstall disconnects the
-                      topology (domain level 1+)
-  --no-pkinit         disables pkinit setup steps
-  --no-ui-redirect    Do not automatically redirect to the Web UI
-  --ssh-trust-dns     configure OpenSSH client to trust DNS SSHFP records
-  --no-ssh            do not configure OpenSSH client
-  --no-sshd           do not configure OpenSSH server
-  --no-dns-sshfp      Do not automatically create DNS SSHFP records
-  --dirsrv-config-file=FILE
-                      The path to LDIF file that will be used to modify
-                      configuration of dse.ldif during installation of the
-                      directory server instance
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -U, --unattended      unattended (un)installation never prompts the user
+  --uninstall           uninstall an existing installation. The uninstall can
+                        be run with --unattended option
 
-certificate system options:
-  --external-ca       Generate a CSR for the IPA CA certificate to be signed
-                      by an external CA
-  --external-ca-type=EXTERNAL_CA_TYPE
-                      Type of the external CA
-  --external-cert-file=FILE
-                      File containing the IPA CA certificate and the
-                      external CA certificate chain
-  --dirsrv-cert-file=FILE
-                      File containing the Directory Server SSL certificate
-                      and private key
-  --http-cert-file=FILE
-                      File containing the Apache Server SSL certificate and
-                      private key
-  --pkinit-cert-file=FILE
-                      File containing the Kerberos KDC SSL certificate and
-                      private key
-  --dirsrv-pin=PIN    The password to unlock the Directory Server private
-                      key
-  --http-pin=PIN      The password to unlock the Apache Server private key
-  --pkinit-pin=PIN    The password to unlock the Kerberos KDC private key
-  --dirsrv-cert-name=NAME
-                      Name of the Directory Server SSL certificate to
-                      install
-  --http-cert-name=NAME
-                      Name of the Apache Server SSL certificate to install
-  --pkinit-cert-name=NAME
-                      Name of the Kerberos KDC SSL certificate to install
-  --ca-cert-file=FILE
-                      File containing CA certificates for the service
-                      certificate files
-  --subject=SUBJECT   The certificate subject base (default O=<realm-name>)
-  --ca-signing-algorithm=CA_SIGNING_ALGORITHM
-                      Signing algorithm of the IPA CA certificate
+  Basic options:
+    -p DM_PASSWORD, --ds-password=DM_PASSWORD
+                        Directory Manager password
+    -a ADMIN_PASSWORD, --admin-password=ADMIN_PASSWORD
+                        admin user kerberos password
+    --ip-address=IP_ADDRESS
+                        Master Server IP Address. This option can be used
+                        multiple times
+    -n DOMAIN_NAME, --domain=DOMAIN_NAME
+                        primary DNS domain of the IPA deployment (not
+                        necessarily related to the current hostname)
+    -r REALM_NAME, --realm=REALM_NAME
+                        Kerberos realm name of the IPA deployment (typically
+                        an upper-cased name of the primary DNS domain)
+    --hostname=HOST_NAME
+                        fully qualified name of this host
+    --ca-cert-file=FILE
+                        File containing CA certificates for the service
+                        certificate files
+    --no-host-dns       Do not use DNS for hostname lookup during installation
 
-DNS options:
-  --forwarder=FORWARDERS
-                      Add a DNS forwarder. This option can be used multiple
-                      times
-  --auto-forwarders   Use DNS forwarders configured in /etc/resolv.conf
-  --no-forwarders     Do not add any DNS forwarders, use root servers
-                      instead
-  --allow-zone-overlap
-                      Create DNS zone even if it already exists
-  --reverse-zone=REVERSE_ZONE
-                      The reverse DNS zone to use. This option can be used
-                      multiple times
-  --no-reverse        Do not create new reverse DNS zone
-  --auto-reverse      Create necessary reverse zones
-  --no-dnssec-validation
-                      Disable DNSSEC validation
-  --zonemgr=ZONEMGR   DNS zone manager e-mail address. Defaults to
-                      hostmaster@DOMAIN
+  Server options:
+    --setup-adtrust     configure AD trust capability
+    --setup-kra         configure a dogtag KRA
+    --setup-dns         configure bind with our zone
+    --idstart=IDSTART   The starting value for the IDs range (default random)
+    --idmax=IDMAX       The max value for the IDs range (default:
+                        idstart+199999)
+    --no-hbac-allow     Don't install allow_all HBAC rule
+    --no-pkinit         disables pkinit setup steps
+    --no-ui-redirect    Do not automatically redirect to the Web UI
+    --dirsrv-config-file=FILE
+                        The path to LDIF file that will be used to modify
+                        configuration of dse.ldif during installation of the
+                        directory server instance
 
-Logging and output options:
-  -v, --verbose       print debugging information
-  -d, --debug         alias for --verbose (deprecated)
-  -q, --quiet         output only errors
-  --log-file=FILE     log to the given file
+  SSL certificate options:
+    --dirsrv-cert-file=FILE
+                        File containing the Directory Server SSL certificate
+                        and private key
+    --http-cert-file=FILE
+                        File containing the Apache Server SSL certificate and
+                        private key
+    --pkinit-cert-file=FILE
+                        File containing the Kerberos KDC SSL certificate and
+                        private key
+    --dirsrv-pin=PIN    The password to unlock the Directory Server private
+                        key
+    --http-pin=PIN      The password to unlock the Apache Server private key
+    --pkinit-pin=PIN    The password to unlock the Kerberos KDC private key
+    --dirsrv-cert-name=NAME
+                        Name of the Directory Server SSL certificate to
+                        install
+    --http-cert-name=NAME
+                        Name of the Apache Server SSL certificate to install
+    --pkinit-cert-name=NAME
+                        Name of the Kerberos KDC SSL certificate to install
 
-uninstall options:
-  --uninstall         uninstall an existing installation. The uninstall can
-                      be run with --unattended option
+  Client options:
+    --mkhomedir         create home directories for users on their first login
+    -N, --no-ntp        do not configure ntp
+    --ssh-trust-dns     configure OpenSSH client to trust DNS SSHFP records
+    --no-ssh            do not configure OpenSSH client
+    --no-sshd           do not configure OpenSSH server
+    --no-dns-sshfp      do not automatically create DNS SSHFP records
+
+  Certificate system options:
+    --external-ca       Generate a CSR for the IPA CA certificate to be signed
+                        by an external CA
+    --external-ca-type={generic,ms-cs}
+                        Type of the external CA
+    --external-ca-profile=EXTERNAL_CA_PROFILE
+                        Specify the certificate profile/template to use at the
+                        external CA
+    --external-cert-file=FILE
+                        File containing the IPA CA certificate and the
+                        external CA certificate chain
+    --subject-base=SUBJECT_BASE
+                        The certificate subject base (default O=<realm-name>).
+                        RDNs are in LDAP order (most specific RDN first).
+    --ca-subject=CA_SUBJECT
+                        The CA certificate subject DN (default CN=Certificate
+                        Authority,O=<realm-name>). RDNs are in LDAP order
+                        (most specific RDN first).
+    --ca-signing-algorithm={SHA1withRSA,SHA256withRSA,SHA512withRSA}
+                        Signing algorithm of the IPA CA certificate
+
+  DNS options:
+    --allow-zone-overlap
+                        Create DNS zone even if it already exists
+    --reverse-zone=REVERSE_ZONE
+                        The reverse DNS zone to use. This option can be used
+                        multiple times
+    --no-reverse        Do not create new reverse DNS zone
+    --auto-reverse      Create necessary reverse zones
+    --zonemgr=ZONEMGR   DNS zone manager e-mail address. Defaults to
+                        hostmaster@DOMAIN
+    --forwarder=FORWARDERS
+                        Add a DNS forwarder. This option can be used multiple
+                        times
+    --no-forwarders     Do not add any DNS forwarders, use root servers
+                        instead
+    --auto-forwarders   Use DNS forwarders configured in /etc/resolv.conf
+    --forward-policy={first,only}
+                        DNS forwarding policy for global forwarders
+    --no-dnssec-validation
+                        Disable DNSSEC validation
+
+  AD trust options:
+    --enable-compat     Enable support for trusted domains for old clients
+    --netbios-name=NETBIOS_NAME
+                        NetBIOS name of the IPA domain
+    --rid-base=RID_BASE
+                        Start value for mapping UIDs and GIDs to RIDs
+    --secondary-rid-base=SECONDARY_RID_BASE
+                        Start value of the secondary range for mapping UIDs
+                        and GIDs to RIDs
+
+  Uninstall options:
+    --ignore-topology-disconnect
+                        do not check whether server uninstall disconnects the
+                        topology (domain level 1+)
+    --ignore-last-of-role
+                        do not check whether server uninstall removes last
+                        CA/DNS server or DNSSec master (domain level 1+)
+
+  Logging and output options:
+    -v, --verbose       print debugging information
+    -d, --debug         alias for --verbose (deprecated)
+    -q, --quiet         output only errors
+    --log-file=FILE     log to the given file
 ```
 
 Testing
@@ -284,7 +326,7 @@ Testing
 [![Build Status](https://travis-ci.org/timorunge/ansible-freeipa-server.svg?branch=master)](https://travis-ci.org/timorunge/ansible-freeipa-server)
 
 Testing is done with [Vagrant](https://www.vagrantup.com/)
-([Installing Vagrant](https://www.vagrantup.com/docs/installation/))
+([installing Vagrant](https://www.vagrantup.com/docs/installation/))
 which brings up the following virtual machines:
 
 * EL
@@ -351,7 +393,7 @@ On FreeIPA you can also find a general
 is covering the most important topics.
 
 There is an Ansible role out there which is doing some basic backups:
-[FreeIPA Server Backup](https://galaxy.ansible.com/timorunge/freeipa_server_backup/)
+[FreeIPA Server Backup](https://galaxy.ansible.com/timorunge/freeipa_server_backup)
 ([Github Repo](https://github.com/timorunge/ansible-freeipa-server-backup)).
 
 Dependencies

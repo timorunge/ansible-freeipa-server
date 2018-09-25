@@ -11,7 +11,7 @@
   package:
     name: "{{ freeipa_server_pkgs }}"
     state: present
-    update_cache: "{{ omit if ansible_pkg_mgr == 'dnf' else 'yes' }}"
+    update_cache: "{{ omit if ((ansible_pkg_mgr == 'dnf') and (ansible_version is version('2.7', '<'))) else 'yes' }}"
 
 - name: Install FreeIPA server pip dependencies
   pip:
