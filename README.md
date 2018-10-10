@@ -1,5 +1,4 @@
-freeipa_server
-==============
+# freeipa_server
 
 This role is installing and configuring the FreeIPA Server according to
 your needs.
@@ -15,8 +14,7 @@ possible (and tested) to use `freeipa_server` with the latest version of
 FreeIPA itself on Ubuntu >= 18.04 (take a look at the
 [example section](https://github.com/timorunge/ansible-freeipa#6-install-freeipa-with-timorungesssd-and-timorungefreeipa_server)).
 
-Requirements
-------------
+## Requirements
 
 This role requires
 [Ansible 2.5.0](https://docs.ansible.com/ansible/devel/roadmap/ROADMAP_2_5.html)
@@ -30,15 +28,13 @@ pip install ansible==2.7.0
 
 All platform requirements are listed in the metadata file.
 
-Install
--------
+## Install
 
 ```sh
 ansible-galaxy install timorunge.freeipa_server
 ```
 
-Role Variables
---------------
+## Role Variables
 
 It is required to set the following variables in order to get this role up and
 running (without customisation). Those variables don't have any default values:
@@ -95,15 +91,14 @@ freeipa_server_install_options:
   - "--auto-forwarders"
 ```
 
-Examples
---------
+## Examples
 
 To keep the document lean the install options are stripped. You can
 find the install options either in
 [this document](#freeipa-server-install-options) or in the
 [online man pages for ipa-server-install](https://linux.die.net/man/1/ipa-server-install).
 
-## 1) Install the FreeIPA server with default settings
+### 1) Install the FreeIPA server with default settings
 
 ```yaml
 - hosts: freeipa-server
@@ -118,7 +113,7 @@ find the install options either in
     - timorunge.freeipa_server
 ```
 
-## 2) Install the FreeIPA server and enable it automatically on all (IPv4) network interfaces
+### 2) Install the FreeIPA server and enable it automatically on all (IPv4) network interfaces
 
 You should still set `freeipa_server_ip` if you want to use `freeipa_server_manage_host`.
 
@@ -137,7 +132,7 @@ You should still set `freeipa_server_ip` if you want to use `freeipa_server_mana
     - timorunge.freeipa_server
 ```
 
-## 3) Install the FreeIPA server with custom install options
+### 3) Install the FreeIPA server with custom install options
 
 ```yaml
 - hosts: freeipa-server
@@ -172,8 +167,7 @@ You should still set `freeipa_server_ip` if you want to use `freeipa_server_mana
     - timorunge.freeipa_server
 ```
 
-FreeIPA server install options
-------------------------------
+## FreeIPA server install options
 
 An overview of the install options for ipa-server-install (4.6.4).
 
@@ -320,8 +314,7 @@ Options:
     --log-file=FILE     log to the given file
 ```
 
-Testing
--------
+## Testing
 
 [![Build Status](https://travis-ci.org/timorunge/ansible-freeipa-server.svg?branch=master)](https://travis-ci.org/timorunge/ansible-freeipa-server)
 
@@ -329,15 +322,15 @@ Testing is done with [Vagrant](https://www.vagrantup.com/)
 ([installing Vagrant](https://www.vagrantup.com/docs/installation/))
 which brings up the following virtual machines:
 
-* EL
-  * 7
-* Fedora
-  * 26
-  * 27
-* Ubuntu
-  * 16.04 LTS (Xenial Xerus)
-  * 17.10 (Artful Aardvark)
-  * 18.04 LTS (Bionic Beaver)
+- EL
+  - 7
+- Fedora
+  - 26
+  - 27
+- Ubuntu
+  - 16.04 LTS (Xenial Xerus)
+  - 17.10 (Artful Aardvark)
+  - 18.04 LTS (Bionic Beaver)
 
 The latest stable release of Ansible is installed on all virtual machines and is
 applying a [test playbook](tests/test.yml) locally.
@@ -362,8 +355,17 @@ Travis tests are done with [Docker](https://www.docker.com) and
 [docker_test_runner](https://github.com/timorunge/docker-test-runner). Tests
 on Travis are performing linting and syntax checks.
 
-Security
---------
+For further details and additional checks take a look at the
+[docker_test_runner configuration](tests/docker_test_runner.yml) and the
+[Docker entrypoint](tests/docker/docker-entrypoint.sh).
+
+```sh
+# Testing locally:
+curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/install.sh | sh
+./docker_test_runner.py -f tests/docker_test_runner.yml
+```
+
+## Security
 
 This playbook is not taking care of securing FreeIPA Server which can be done
 with e.g. [firewalld](https://firewalld.org/) or
@@ -372,17 +374,18 @@ with e.g. [firewalld](https://firewalld.org/) or
 Depending on your setup you have to open the following ports:
 
 TCP ports:
+
 - 80, 443: HTTP/HTTPS
 - 389, 636: LDAP/LDAPS
 - 88, 464: kerberos
 - 53: bind
 
 UDP Ports:
+
 - 88, 464: kerberos
 - 53: bind
 
-Backup
-------
+## Backup
 
 Be sure to back up the CA certificates stored in /root/cacert.p12. These files
 are required to create replicas. The password for these files is the Directory
@@ -396,16 +399,14 @@ There is an Ansible role out there which is doing some basic backups:
 [FreeIPA Server Backup](https://galaxy.ansible.com/timorunge/freeipa_server_backup)
 ([Github Repo](https://github.com/timorunge/ansible-freeipa-server-backup)).
 
-Dependencies
-------------
+## Dependencies
 
 None
 
-License
--------
+## License
+
 BSD
 
-Author Information
-------------------
+## Author Information
 
 - Timo Runge
