@@ -23,7 +23,7 @@ or higher.
 You can simply use pip to install (and define) a stable version:
 
 ```sh
-pip install ansible==2.7.0
+pip install ansible==2.7.1
 ```
 
 All platform requirements are listed in the metadata file.
@@ -405,7 +405,7 @@ None
 
 ## License
 
-BSD
+[BSD 3-Clause "New" or "Revised" License](https://spdx.org/licenses/BSD-3-Clause.html)
 
 ## Author Information
 
