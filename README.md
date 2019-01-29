@@ -89,6 +89,10 @@ freeipa_server_install_options:
   - "--ssh-trust-dns"
   - "--forwarder=8.8.8.8"
   - "--auto-forwarders"
+
+# Enable/Disable manage RedHat epel repository
+# Type: Bool
+freeipa_server_epel_repo: True
 ```
 
 ## Examples
