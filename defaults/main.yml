@@ -4,6 +4,10 @@
 # Type: Bool
 freeipa_server_install_pkgs: True
 
+# Enable/Disable manage RedHat epel repository
+# Type: Bool
+freeipa_server_enable_epel_repo: True
+
 # Automatically setting an entry in /etc/hosts
 # Type: Bool
 freeipa_server_manage_host: True
@@ -29,6 +33,3 @@ freeipa_server_install_options:
   - "--forwarder=8.8.8.8"
   - "--auto-forwarders"
 
-# Enable/Disable manage RedHat epel repository
-# Type: Bool
-freeipa_server_epel_repo: True
