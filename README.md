@@ -64,6 +64,10 @@ The variables that can be passed to this role and a brief description about
 them are as follows. (For all variables, take a look at [defaults/main.yml](defaults/main.yml))
 
 ```yaml
+# Enable/Disable manage RedHat epel repository
+# Type: Bool
+freeipa_server_enable_epel_repo: True
+
 # Automatically setting an entry in /etc/hosts
 # Type: Bool
 freeipa_server_manage_host: True

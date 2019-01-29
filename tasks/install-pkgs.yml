@@ -5,7 +5,9 @@
     name: epel
     description: EPEL YUM repo
     baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
-  when: ansible_os_family == "RedHat"
+  when:
+    - ansible_os_family == "RedHat"
+    - freeipa_server_enable_epel_repo
 
 - name: Install FreeIPA server packages
   package:
