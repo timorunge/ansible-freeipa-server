@@ -12,9 +12,17 @@ freeipa_server_enable_epel_repo: True
 # Type: Bool
 freeipa_server_manage_host: True
 
+# Choice FreeIPA server installation type (master/replica)
+# Type: Str
+freeipa_server_type: master
+
+# FQDN of the master FreeIPA server
+# Type: Str
+freeipa_server_master_fqdn: ''
+
 # The base command for the FreeIPA server installation
 # Type: Str
-freeipa_server_install_base_command: ipa-server-install --unattended
+freeipa_server_install_base_command: "ipa-{{ 'server' if freeipa_server_type == 'master' else 'replica' }}-install --unattended {{ '--server=' + freeipa_server_master_fqdn if freeipa_server_type == 'replica' else '' }}"
 
 # The default FreeIPA server installation options
 # Type: List

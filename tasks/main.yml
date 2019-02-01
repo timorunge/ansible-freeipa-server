@@ -11,6 +11,18 @@
       paths:
         - vars
 
+- name: Check installation type
+  fail:
+    msg: "freeipa_server_type: '{{ freeipa_server_type }}' is not a valid installation type"
+  when: freeipa_server_type not in freeipa_server_supported_types
+
+- name: Check freeipa_server_master_fqdn is not empty
+  fail:
+    msg: "'freeipa_server_master_fqdn' is empty"
+  when:
+    - freeipa_server_type == 'replica'
+    - freeipa_server_master_fqdn | length == 0
+
 - include_tasks: dependencies.yml
 
 - include_tasks: install-pkgs.yml

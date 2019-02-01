@@ -9,3 +9,10 @@ freeipa_server_pip_pkgs:
   - pyasn1-modules
   - pyopenssl
   - python-ldap
+
+# List of supported types installation of FreeIPA server
+# Type: List
+freeipa_server_supported_types:
+  - master
+  - replica
+

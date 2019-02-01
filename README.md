@@ -72,9 +72,17 @@ freeipa_server_enable_epel_repo: True
 # Type: Bool
 freeipa_server_manage_host: True
 
+# Choice FreeIPA server installation type (master/replica)
+# Type: Str
+freeipa_server_type: master
+
+# FQDN of the master FreeIPA server
+# Type: Str
+freeipa_server_master_fqdn: ''
+
 # The base command for the FreeIPA installation
 # Type: Str
-freeipa_server_install_base_command: ipa-server-install --unattended
+freeipa_server_install_base_command: ipa-{{ 'server' if freeipa_server_type == 'master' else 'replica' }}-install --unattended {{ '--server=' + freeipa_server_master_fqdn if freeipa_server_type == 'replica' }}
 
 # The default FreeIPA installation options
 # Type: List
@@ -102,7 +110,7 @@ find the install options either in
 [this document](#freeipa-server-install-options) or in the
 [online man pages for ipa-server-install](https://linux.die.net/man/1/ipa-server-install).
 
-### 1) Install the FreeIPA server with default settings
+### 1) Install the FreeIPA server as master with default settings
 
 ```yaml
 - hosts: freeipa-server
@@ -110,14 +118,31 @@ find the install options either in
     freeipa_server_admin_password: Passw0rd
     freeipa_server_domain: example.com
     freeipa_server_ds_password: Passw0rd
-    freeipa_server_fqdn: ipa.example.com
+    freeipa_server_fqdn: ipa-master.example.com
     freeipa_server_ip: 172.20.0.2
     freeipa_server_realm: EXAMPLE.COM
   roles:
     - timorunge.freeipa_server
 ```
 
-### 2) Install the FreeIPA server and enable it automatically on all (IPv4) network interfaces
+### 2) Install the FreeIPA server as replica with default settings
+
+```yaml
+- hosts: freeipa-server
+  vars:
+    freeipa_server_type: replica
+    freeipa_server_master_fqdn: ipa-master.example.com
+    freeipa_server_admin_password: Passw0rd
+    freeipa_server_domain: example.com
+    freeipa_server_ds_password: Passw0rd
+    freeipa_server_fqdn: ipa-replica.example.com
+    freeipa_server_ip: 172.20.0.3
+    freeipa_server_realm: EXAMPLE.COM
+  roles:
+    - timorunge.freeipa_server
+```
+
+### 3) Install the FreeIPA server and enable it automatically on all (IPv4) network interfaces
 
 You should still set `freeipa_server_ip` if you want to use `freeipa_server_manage_host`.
 
@@ -128,7 +153,7 @@ You should still set `freeipa_server_ip` if you want to use `freeipa_server_mana
     freeipa_server_domain: example.com
     freeipa_server_ds_password: Passw0rd
     freeipa_server_fqdn: ipa.example.com
-    freeipa_server_ip: 172.20.0.2
+    freeipa_server_ip: 172.20.0.3
     freeipa_server_realm: EXAMPLE.COM
     freeipa_server_install_options:
       - "--ip-address={{ ansible_all_ipv4_addresses | join(' --ip-address=') }}"
@@ -136,7 +161,7 @@ You should still set `freeipa_server_ip` if you want to use `freeipa_server_mana
     - timorunge.freeipa_server
 ```
 
-### 3) Install the FreeIPA server with custom install options
+### 4) Install the FreeIPA server with custom install options
 
 ```yaml
 - hosts: freeipa-server
