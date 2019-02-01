@@ -72,17 +72,17 @@ freeipa_server_enable_epel_repo: True
 # Type: Bool
 freeipa_server_manage_host: True
 
-# Choice FreeIPA server type installation (master/replica)
+# Choice FreeIPA server installation type (master/replica)
 # Type: Str
 freeipa_server_type: master
 
-# FQDN of master FreeIPA server
+# FQDN of the master FreeIPA server
 # Type: Str
-freeipa_server_master: ''
+freeipa_server_master_fqdn: ''
 
 # The base command for the FreeIPA installation
 # Type: Str
-freeipa_server_install_base_command: ipa-{{ 'server' if freeipa_server_type == 'master' else 'replica' }}-install --unattended {{ '--server=' + freeipa_server_master if freeipa_server_type == 'replica' }}
+freeipa_server_install_base_command: ipa-{{ 'server' if freeipa_server_type == 'master' else 'replica' }}-install --unattended {{ '--server=' + freeipa_server_master_fqdn if freeipa_server_type == 'replica' }}
 
 # The default FreeIPA installation options
 # Type: List
@@ -110,7 +110,7 @@ find the install options either in
 [this document](#freeipa-server-install-options) or in the
 [online man pages for ipa-server-install](https://linux.die.net/man/1/ipa-server-install).
 
-### 1) Install the FreeIPA server with default settings (master)
+### 1) Install the FreeIPA server as master with default settings
 
 ```yaml
 - hosts: freeipa-server
@@ -125,13 +125,13 @@ find the install options either in
     - timorunge.freeipa_server
 ```
 
-### 2) Install the FreeIPA server with default settings (replica)
+### 2) Install the FreeIPA server as replica with default settings
 
 ```yaml
 - hosts: freeipa-server
   vars:
     freeipa_server_type: replica
-    freeipa_server_master: ipa-master.example.com
+    freeipa_server_master_fqdn: ipa-master.example.com
     freeipa_server_admin_password: Passw0rd
     freeipa_server_domain: example.com
     freeipa_server_ds_password: Passw0rd
