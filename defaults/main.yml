@@ -1,16 +1,16 @@
 ---
 
-# Install FreeIPA packages (set to False if you're using `timorunge.freeipa`)
+# Install FreeIPA packages (set to false if you're using `timorunge.freeipa`)
 # Type: Bool
-freeipa_server_install_pkgs: True
+freeipa_server_install_pkgs: true
 
 # Enable/Disable manage RedHat epel repository
 # Type: Bool
-freeipa_server_enable_epel_repo: True
+freeipa_server_enable_epel_repo: true
 
 # Automatically setting an entry in /etc/hosts
 # Type: Bool
-freeipa_server_manage_host: True
+freeipa_server_manage_host: true
 
 # Choice FreeIPA server installation type (master/replica)
 # Type: Str
@@ -40,4 +40,3 @@ freeipa_server_install_options:
   - "--ssh-trust-dns"
   - "--forwarder=8.8.8.8"
   - "--auto-forwarders"
-

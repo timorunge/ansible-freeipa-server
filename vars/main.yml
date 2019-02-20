@@ -15,4 +15,3 @@ freeipa_server_pip_pkgs:
 freeipa_server_supported_types:
   - master
   - replica
-

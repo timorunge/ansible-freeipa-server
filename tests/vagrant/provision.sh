@@ -36,7 +36,7 @@ fi
 curl -s https://bootstrap.pypa.io/get-pip.py | python
 
 pip install --upgrade \
-  ansible==2.7.0 \
+  ansible==2.7.7 \
   ansible-lint \
   coverage \
   cryptography \

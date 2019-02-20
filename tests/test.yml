@@ -1,9 +1,9 @@
 ---
 
 - hosts: localhost
-  gather_facts: True
+  gather_facts: true
   vars:
-    freeipa_server_manage_host: True
+    freeipa_server_manage_host: true
     freeipa_server_admin_password: Passw0rd
     freeipa_server_domain: example.com
     freeipa_server_ds_password: Passw0rd

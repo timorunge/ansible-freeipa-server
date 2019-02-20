@@ -23,7 +23,7 @@ or higher.
 You can simply use pip to install (and define) a stable version:
 
 ```sh
-pip install ansible==2.7.6
+pip install ansible==2.7.7
 ```
 
 All platform requirements are listed in the metadata file.
@@ -66,11 +66,11 @@ them are as follows. (For all variables, take a look at [defaults/main.yml](defa
 ```yaml
 # Enable/Disable manage RedHat epel repository
 # Type: Bool
-freeipa_server_enable_epel_repo: True
+freeipa_server_enable_epel_repo: true
 
 # Automatically setting an entry in /etc/hosts
 # Type: Bool
-freeipa_server_manage_host: True
+freeipa_server_manage_host: true
 
 # Choice FreeIPA server installation type (master/replica)
 # Type: Str
@@ -434,7 +434,7 @@ None
 
 ## License
 
-[BSD 3-Clause "New" or "Revised" License](https://spdx.org/licenses/BSD-3-Clause.html)
+[BSD 3-Clause "New" or "Revised" License](LICENSE)
 
 ## Author Information
 
