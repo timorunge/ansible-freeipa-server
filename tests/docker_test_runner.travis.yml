@@ -16,7 +16,7 @@ docker_image_path: "__PATH__/tests/docker"
 
 docker_images:
   - CentOS_7
-  - Debian_9_4
+  - Debian_9
 
 docker_container_volumes:
   "__PATH__":
