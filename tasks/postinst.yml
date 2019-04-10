@@ -1,0 +1,17 @@
+---
+
+- name: Fixing Google Authenticator QR Code recognition - otptoken.py
+  patch:
+    dest: "{{ freeipa_server_python27_path }}/ipaserver/plugins/otptoken.py"
+    src: files/patches/fix-google-authenticator-qr-code-recognition-otptoken.py
+    state: present
+  when: freeipa_server_fix_google_authenticator_qr_code_recognition
+  notify: restart ipa services
+
+- name: Fixing Google Authenticator QR Code recognition - app.js
+  replace:
+    dest: /usr/share/ipa/ui/js/freeipa/app.js
+    regexp: 'default_value:\"sha1\",options:\[\"sha1\",\"sha256\",\"sha384\",\"sha512\"\]\}'
+    replace: 'default_value:"SHA1",options:["SHA1","SHA256","SHA384","SHA512"]}'
+  when: freeipa_server_fix_google_authenticator_qr_code_recognition
+  notify: restart ipa services

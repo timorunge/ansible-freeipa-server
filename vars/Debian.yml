@@ -8,3 +8,13 @@ freeipa_server_pkgs:
   - freeipa-common
   - freeipa-server
   - freeipa-server-dns
+  - realmd
+
+# FreeIPA dependency packages
+# Type: List
+freeipa_server_dependency_pkgs:
+  - patch
+
+# FreeIPA python2.7 path
+# Type: Str
+freeipa_server_python27_path: /usr/lib/python2.7/dist-packages

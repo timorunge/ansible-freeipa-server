@@ -20,6 +20,12 @@ freeipa_server_type: master
 # Type: Str
 freeipa_server_master_fqdn: ''
 
+# Fixes a bug in FreeIPA which causes the Google Authenticator to fail to
+# reconize the QR code. Fur further defails take a look at
+# https://www.freeipa.org/page/Using_FreeIPA_and_FreeRadius_as_a_RADIUS_based_software_token_OTP_system_with_CentOS/RedHat_7
+# Type: Bool
+freeipa_server_fix_google_authenticator_qr_code_recognition: false
+
 # The base command for the FreeIPA server installation
 # Type: Str
 freeipa_server_install_base_command: "ipa-{{ 'server' if freeipa_server_type == 'master' else 'replica' }}-install --unattended {{ '--server=' + freeipa_server_master_fqdn if freeipa_server_type == 'replica' else '' }}"
