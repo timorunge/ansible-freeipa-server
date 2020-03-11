@@ -9,6 +9,10 @@
     - ansible_os_family == "RedHat"
     - freeipa_server_enable_epel_repo
 
+- name: Add EPEL GPG key
+  rpm_key:
+    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+
 - name: Install FreeIPA server dependency packages
   package:
     name: "{{ freeipa_server_dependency_pkgs }}"
