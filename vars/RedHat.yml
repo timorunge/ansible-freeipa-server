@@ -15,6 +15,7 @@ freeipa_server_pkgs:
 # Type: List
 freeipa_server_dependency_pkgs:
   - patch
+  - python2-pip
 
 # FreeIPA python2.7 path
 # Type: Str
