@@ -4,7 +4,7 @@ This role is installing and configuring the FreeIPA Server according to
 your needs.
 
 This playbook is taking care of the initialisation of the Kerberos admin
-user (username: `admin`, password is the one which you're setting in
+user (username: `admin`, passeword is the one which you're setting in
 `freeipa_server_admin_password`).
 
 In combination with
