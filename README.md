@@ -14,6 +14,9 @@ possible (and tested) to use `freeipa_server` with the latest version of
 FreeIPA itself on Ubuntu >= 18.04 (take a look at the
 [example section](https://github.com/timorunge/ansible-freeipa#6-install-freeipa-with-timorungesssd-and-timorungefreeipa_server)).
 
+## Don`t support Ubuntu 20.04
+Ubuntu 20.04 don`t have pacakge freeipa-server
+
 ## Requirements
 
 This role requires
