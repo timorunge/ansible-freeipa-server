@@ -1,3 +1,7 @@
+> **Status: Archived.**
+>
+> This repository is no longer maintained and is kept for reference only.
+
 # freeipa_server
 
 This role is installing and configuring the FreeIPA Server according to
@@ -346,57 +350,6 @@ Options:
     --log-file=FILE     log to the given file
 ```
 
-## Testing
-
-[![Build Status](https://travis-ci.org/timorunge/ansible-freeipa-server.svg?branch=master)](https://travis-ci.org/timorunge/ansible-freeipa-server)
-
-Testing is done with [Vagrant](https://www.vagrantup.com/)
-([installing Vagrant](https://www.vagrantup.com/docs/installation/))
-which brings up the following virtual machines:
-
-- EL
-  - 7
-- Fedora
-  - 26
-  - 27
-- Ubuntu
-  - 16.04 LTS (Xenial Xerus)
-  - 17.10 (Artful Aardvark)
-  - 18.04 LTS (Bionic Beaver)
-
-The latest stable release of Ansible is installed on all virtual machines and is
-applying a [test playbook](tests/test.yml) locally.
-
-For further details and additional checks take a look at the
-[Vagrant entrypoint](tests/vagrant/vagrant-entrypoint.sh).
-
-```sh
-# Testing in all available vagrant machines:
-# This will take some time. Grab a coffee. Or two. Or forty two.
-cd tests
-vagrant up --parallel && vagrant halt
-for h in $(vagrant global-status --prune | grep freeipa_server | awk '{print $2}') ; do echo ${h} ; vagrant up --provision ${h} ; vagrant ssh ${h} -c "sudo /vagrant/vagrant-entrypoint.sh" && (echo "$(date): ${h}: pass" >> tests/results.log) || (echo "$(date): ${h}: fail" >> tests/results.log) ; vagrant halt ${h} ; done
-vagrant destroy -f
-```
-
-If Vagrant is failing to mount the directories you should ensure that you've
-installed the
-[VirtualBox Guest Additions](https://www.virtualbox.org/manual/ch04.html#idm2099).
-
-Travis tests are done with [Docker](https://www.docker.com) and
-[docker_test_runner](https://github.com/timorunge/docker-test-runner). Tests
-on Travis are performing linting and syntax checks.
-
-For further details and additional checks take a look at the
-[docker_test_runner configuration](tests/docker_test_runner.yml) and the
-[Docker entrypoint](tests/docker/docker-entrypoint.sh).
-
-```sh
-# Testing locally:
-curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/install.sh | sh
-./docker_test_runner.py -f tests/docker_test_runner.yml
-```
-
 ## Security
 
 This playbook is not taking care of securing FreeIPA Server which can be done
@@ -438,7 +391,3 @@ None
 ## License
 
 [BSD 3-Clause "New" or "Revised" License](LICENSE)
-
-## Author Information
-
-- Timo Runge

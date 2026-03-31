@@ -1,7 +1,1 @@
 *.log
-.vagrant
-docker_test_runner.py
-tests/.vagrant
-tests/ansible.cfg
-tests/results.log
-tests/test.retry
